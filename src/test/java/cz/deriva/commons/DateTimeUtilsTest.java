@@ -9,6 +9,9 @@ import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
 import java.time.*;
+import java.time.temporal.TemporalField;
+import java.util.Calendar;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,7 +55,7 @@ class DateTimeUtilsTest {
 
     }
 
-    private void checkDate(ZonedDateTime ps, int year, int month, int day, int hour, int minute, int second, String timeZone) {
+    private void checkZonedDateTime(ZonedDateTime ps, int year, int month, int day, int hour, int minute, int second, String timeZone) {
         assertAll(
                 () -> assertNotNull(ps),
                 () -> assertEquals(year, ps.getYear()),
@@ -73,7 +76,7 @@ class DateTimeUtilsTest {
         public void localTimeUtc() {
             final String parseString = "1981-11-29T18:35:57Z";
             ZonedDateTime ps = DateTimeUtils.parse(parseString);
-            checkDate(ps, 1981, 11, 29, 18, 35, 57, "Z");
+            checkZonedDateTime(ps, 1981, 11, 29, 18, 35, 57, "Z");
         }
 
         @Test
@@ -81,7 +84,7 @@ class DateTimeUtilsTest {
         public void localTimeWinterTime() {
             final String parseString = "1981-11-29T18:35:57+01:00";
             ZonedDateTime ps = DateTimeUtils.parse(parseString);
-            checkDate(ps, 1981, 11, 29, 18, 35, 57, "+01:00");
+            checkZonedDateTime(ps, 1981, 11, 29, 18, 35, 57, "+01:00");
         }
 
     }
@@ -93,7 +96,7 @@ class DateTimeUtilsTest {
         @Test
         public void test1() {
             final ZonedDateTime v = DateTimeUtils.localTimeInUtc();
-            checkDate(v, 1981, 11, 29, 17, 35, 57, "UTC");
+            checkZonedDateTime(v, 1981, 11, 29, 17, 35, 57, "UTC");
         }
 
     }
@@ -105,9 +108,60 @@ class DateTimeUtilsTest {
         @Test
         public void test1() {
             ZonedDateTime v = DateTimeUtils.localDateWithTimeZone();
-            checkDate(v, 1981, 11, 29, 18, 35, 57, "Europe/Prague");
+            checkZonedDateTime(v, 1981, 11, 29, 18, 35, 57, "Europe/Prague");
         }
 
+    }
+
+
+    @Nested
+    class ToDate {
+
+        @Test
+        public void test1() {
+
+            Date dd = DateTimeUtils.toDate(DateTimeUtils.actualDateTime());
+
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dd);
+
+            assertAll(
+                    () -> assertNotNull(dd),
+                    () -> assertEquals(1981, cal.get(Calendar.YEAR)),
+                    () -> assertEquals(10, cal.get(Calendar.MONTH)),
+                    () -> assertEquals(29, cal.get(Calendar.DAY_OF_MONTH)),
+                    () -> assertEquals(19, cal.get(Calendar.HOUR_OF_DAY)),
+                    () -> assertEquals(35, cal.get(Calendar.MINUTE))
+            );
+        }
+
+    }
+
+
+    class ToUtcLocalDateTime {
+
+        @Test
+        public void test1() {
+
+            Date ddd = Date.from(DateTimeUtils.actualDateTime().toInstant(ZoneOffset.UTC));
+            LocalDateTime dd = DateTimeUtils.toUtcLocalDateTime(ddd);
+
+            checkLocalDateTime(dd, 1981, 11, 29, 18, 35, 57);
+
+        }
+
+    }
+
+    private void checkLocalDateTime(LocalDateTime ps, int year, int month, int day, int hour, int minute, int second) {
+        assertAll(
+                () -> assertNotNull(ps),
+                () -> assertEquals(year, ps.getYear()),
+                () -> assertEquals(month, ps.getMonth().getValue()),
+                () -> assertEquals(day, ps.getDayOfMonth()),
+                () -> assertEquals(hour, ps.getHour()),
+                () -> assertEquals(minute, ps.getMinute()),
+                () -> assertEquals(second, ps.getSecond())
+        );
     }
 
     @Nested

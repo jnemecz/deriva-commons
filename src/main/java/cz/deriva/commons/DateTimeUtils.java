@@ -1,10 +1,8 @@
 package cz.deriva.commons;
 
-import java.time.Clock;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * <p>Utility class pro praci s datem a casem vcetne jejich prevodu mezi casovymi zonami.</p>
@@ -109,6 +107,16 @@ public final class DateTimeUtils {
         LocalDateTime lcd = dateTime.withNano(0).toLocalDateTime();
         ZonedDateTime zdt = ZonedDateTime.of(lcd, dateTime.getZone());
         return zdt.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+    }
+
+    public static LocalDateTime toUtcLocalDateTime(Date date) {
+        Instant instant = Instant.ofEpochMilli(date.getTime());
+        LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
+        return ldt;
+    }
+
+    public static Date toDate(LocalDateTime localDateTime) {
+        return Date.from(localDateTime.toInstant(ZoneOffset.UTC));
     }
 
 }
