@@ -135,14 +135,28 @@ class DateTimeUtilsTest {
 
     }
 
+    @Nested
+    class ToUtcZonedDateTime {
 
+        @Test
+        public void test1() {
+
+            final Date ddd = Date.from(DateTimeUtils.actualDateTime().toInstant(ZoneOffset.UTC));
+            final ZonedDateTime zdt = DateTimeUtils.toUtcZonedDateTime(ddd);
+            checkZonedDateTime(zdt, 1981, 11, 29, 18, 35, 57, "Z");
+
+        }
+
+    }
+
+    @Nested
     class ToUtcLocalDateTime {
 
         @Test
         public void test1() {
 
-            Date ddd = Date.from(DateTimeUtils.actualDateTime().toInstant(ZoneOffset.UTC));
-            LocalDateTime dd = DateTimeUtils.toUtcLocalDateTime(ddd);
+            final Date ddd = Date.from(DateTimeUtils.actualDateTime().toInstant(ZoneOffset.UTC));
+            final LocalDateTime dd = DateTimeUtils.toUtcLocalDateTime(ddd);
 
             checkLocalDateTime(dd, 1981, 11, 29, 18, 35, 57);
 

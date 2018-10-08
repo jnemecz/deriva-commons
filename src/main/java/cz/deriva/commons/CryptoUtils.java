@@ -39,24 +39,7 @@ public final class CryptoUtils {
     }
 
     public static boolean hashCompare(String value1, String value2) {
-
-        AssertUtils.notNull(value1, "Value 1 should not be null");
-        AssertUtils.notNull(value2, "Value 2 should not be null");
-
-        int length1 = value1.length();
-
-        if (length1 != value2.length()) {
-            return false;
-        }
-
-        int status = 0;
-
-        for (int i = 0; i < length1; i++) {
-            status |= value1.charAt(i) ^ value2.charAt(i);
-        }
-
-        return status == 0;
-
+        return StringUtils.equals(value1, value2);
     }
 
     public static byte[] getRandomBytes(int bytesCount) {

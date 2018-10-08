@@ -6,7 +6,7 @@
 
     <groupId>cz.deriva.commons</groupId>
     <artifactId>deriva-commons</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -66,11 +66,7 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <!--<finalName>${project.artifactId}-${project.version}-full</finalName>-->
-
                     <finalName>${project.artifactId}-full</finalName>
-
-
                     <appendAssemblyId>false</appendAssemblyId>
                     <archive>
                         <manifest>
