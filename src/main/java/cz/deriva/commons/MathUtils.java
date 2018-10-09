@@ -17,8 +17,14 @@ public class MathUtils {
   private MathUtils() {
   }
 
-  public static double round(double value, int places) {
-    AssertUtils.validState(places < 0, "Min. 1 desetinne misto");
+  public static BigDecimal round(final BigDecimal value, int places) {
+    AssertUtils.validState((places > 0 && places < 6), "Pocet desetinnych mist musi byt <1;5>");
+    BigDecimal result = value.setScale(places, RoundingMode.HALF_UP);
+    return result;
+  }
+
+  public static double round(final double value, int places) {
+    AssertUtils.validState((places > 0 && places < 6), "Pocet desetinnych mist musi byt <1;5>");
     BigDecimal bd = new BigDecimal(value);
     bd = bd.setScale(places, RoundingMode.HALF_UP);
     return bd.doubleValue();

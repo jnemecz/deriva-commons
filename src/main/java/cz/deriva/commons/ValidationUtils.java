@@ -10,12 +10,12 @@ public final class ValidationUtils {
   private ValidationUtils() {
   }
 
-  public static boolean isNotNullAndGreaterOrEqualThanZero(final BigDecimal fieldValue) {
-    return isGreaterThan(fieldValue, BIGDECIMAL_MINUS_ONE);
+  public static boolean isGteZero(final BigDecimal fieldValue) {
+    return isGreater(fieldValue, BIGDECIMAL_MINUS_ONE);
   }
 
-  public static boolean isNotNullAndGreaterThanZero(final BigDecimal fieldValue) {
-    return isGreaterThan(fieldValue, BigDecimal.ZERO);
+  public static boolean isGtZero(final BigDecimal fieldValue) {
+    return isGreater(fieldValue, BigDecimal.ZERO);
   }
 
   public static boolean isValidEmail(final CharSequence email) {
@@ -61,7 +61,7 @@ public final class ValidationUtils {
 
   /**** PRIVATE STUFF *******************************************************************/
 
-  private static boolean isGreaterThan(BigDecimal value, BigDecimal minimumValue) {
+  private static boolean isGreater(BigDecimal value, BigDecimal minimumValue) {
     if (value == null) {
       return false;
     }
