@@ -6,8 +6,23 @@ import java.util.regex.Pattern;
 public final class ValidationUtils {
 
   private final static BigDecimal BIGDECIMAL_MINUS_ONE = BigDecimal.valueOf(-1);
+  private final static Double DOUBLE_ZERO = 0d;
 
   private ValidationUtils() {
+  }
+
+  public static boolean isGtZero(final Double value) {
+    if (value == null) {
+      return false;
+    }
+    return Double.compare(value, DOUBLE_ZERO) > 0;
+  }
+
+  public static boolean isGteZero(final Double value) {
+    if (value == null) {
+      return false;
+    }
+    return Double.compare(value, DOUBLE_ZERO) >= 0;
   }
 
   public static boolean isGteZero(final BigDecimal fieldValue) {
