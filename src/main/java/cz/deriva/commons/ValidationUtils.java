@@ -63,11 +63,15 @@ public final class ValidationUtils {
       matched = false;
     }
 
-    if (matched && !password.matches("(.*[0-9].*)")) {
+    if (matched && !password.matches("(.*[0-9].*)")) { // alespo jedna cislice
       matched = false;
     }
 
-    if (matched && !password.matches("(.*[A-Z].*)")) {
+    if (matched && !password.matches("(.*[A-Z].*)")) { // alespon jedno velke pismeno
+      matched = false;
+    }
+
+    if (matched && !password.matches("(.*[a-z].*)")) { // alespon jedno male pismeno
       matched = false;
     }
 
