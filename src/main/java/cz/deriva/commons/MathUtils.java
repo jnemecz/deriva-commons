@@ -17,6 +17,13 @@ public class MathUtils {
   private MathUtils() {
   }
 
+  public static int getNumberOfDecimalPlaces(final BigDecimal bigDecimal) {
+    AssertUtils.notNull(bigDecimal, "bigDecimal");
+    String string = bigDecimal.stripTrailingZeros().toPlainString();
+    int index = string.indexOf(".");
+    return index < 0 ? 0 : string.length() - index - 1;
+  }
+
   public static BigDecimal round(final BigDecimal value, int places) {
     AssertUtils.validState((places > 0 && places < 6), "Pocet desetinnych mist musi byt <1;5>");
     BigDecimal result = value.setScale(places, RoundingMode.HALF_UP);

@@ -26,16 +26,22 @@ public final class ValidationUtils {
   }
 
   public static boolean isGteZero(final BigDecimal fieldValue) {
-    return isGreater(fieldValue, BIGDECIMAL_MINUS_ONE);
+    if (fieldValue == null) {
+      return false;
+    }
+    return fieldValue.compareTo(BigDecimal.ZERO) >= 0;
   }
 
   public static boolean isGtZero(final BigDecimal fieldValue) {
-    return isGreater(fieldValue, BigDecimal.ZERO);
+    if (fieldValue == null) {
+      return false;
+    }
+    return fieldValue.compareTo(BigDecimal.ZERO) == 1;
   }
 
   public static boolean isValidEmail(final CharSequence email) {
 
-    if(StringUtils.isBlank(email)){
+    if (StringUtils.isBlank(email)) {
       return false;
     }
 
@@ -84,15 +90,6 @@ public final class ValidationUtils {
     }
 
     return matched;
-  }
-
-  /**** PRIVATE STUFF *******************************************************************/
-
-  private static boolean isGreater(BigDecimal value, BigDecimal minimumValue) {
-    if (value == null) {
-      return false;
-    }
-    return value.compareTo(minimumValue) == 1;
   }
 
 }
