@@ -68,6 +68,26 @@ class DateTimeUtilsTest {
     }
 
     @Nested
+    class CeilingMinutes {
+
+        @Test
+        public void standard() {
+            assertAll(
+                () -> assertEquals(0, DateTimeUtils.ceilMinutesToHalfHour(0)),
+                () -> assertEquals(30, DateTimeUtils.ceilMinutesToHalfHour(1)),
+                () -> assertEquals(30, DateTimeUtils.ceilMinutesToHalfHour(29)),
+                () -> assertEquals(60, DateTimeUtils.ceilMinutesToHalfHour(31)),
+                () -> assertEquals(240, DateTimeUtils.ceilMinutesToHalfHour(240)),
+                () -> assertEquals(270, DateTimeUtils.ceilMinutesToHalfHour(270)),
+                () -> assertEquals(300, DateTimeUtils.ceilMinutesToHalfHour(271)),
+                () -> assertEquals(30, DateTimeUtils.ceilMinutesToHalfHour(Double.MIN_VALUE))
+            );
+        }
+
+    }
+
+
+        @Nested
     class Parse {
 
         @Test

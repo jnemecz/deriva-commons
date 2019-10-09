@@ -43,6 +43,24 @@ public final class DateTimeUtils {
   }
 
   /**
+   * Vraci pocet minut zaokrouhleno nahoru na pulhodiny.
+   *
+   * @param minutes
+   * @return minuty zaokrouhlene na pulhodinu nahoru
+   */
+  public static double ceilMinutesToHalfHour(double minutes) {
+
+    final double diff = minutes % (double) 30;
+
+    if (diff != 0) {
+      return (double) (((int) minutes / 30) + 1) * 30;
+    } else {
+      return minutes;
+    }
+
+  }
+
+  /**
    * <p>Vraci casovou zonu podle mistniho prostredi.</p>
    *
    * @return defaultni casova zona podle mistniho prostredi
