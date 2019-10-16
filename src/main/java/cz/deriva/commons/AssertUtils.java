@@ -23,9 +23,29 @@ public final class AssertUtils {
   public static String notBlank(final String reference, final String parameterName) {
     AssertUtils.notNull(reference, parameterName);
     if (StringUtils.isBlank(reference)) {
-      throw new IllegalArgumentException(String.format("[Assertion failed] - argument %s is required; it must not be blank", parameterName));
+      raiseNotBlankError(parameterName);
     }
     return reference;
+  }
+
+  public static void raiseError(final String message) {
+    throw new IllegalArgumentException(message);
+  }
+
+  public static void raiseNotNullError(final String fieldName) {
+    if (StringUtils.isNotBlank(fieldName)) {
+      raiseError(String.format("[Assertion failed] - argument %s is required; it must not be null", fieldName));
+    } else {
+      raiseError("[Assertion failed] - argument is required; it must not be null");
+    }
+  }
+
+  public static void raiseNotBlankError(final String fieldName) {
+    if (StringUtils.isNotBlank(fieldName)) {
+      raiseError(String.format("[Assertion failed] - argument %s is required; it must not be blank", fieldName));
+    } else {
+      raiseError("[Assertion failed] - argument is required; it must not be blank");
+    }
   }
 
   public static void isGteZero(final Double value, final String parameterName) {
@@ -66,15 +86,14 @@ public final class AssertUtils {
 
   public static <T> T notNull(final T reference) {
     if (reference == null) {
-      throw new IllegalArgumentException("[Assertion failed] - argument is required; it must not be null");
+      raiseNotNullError(null);
     }
     return reference;
   }
 
-
   public static <T> T notNull(final T reference, final String parameterName) {
     if (reference == null) {
-      throw new IllegalArgumentException(String.format("[Assertion failed] - argument %s is required; it must not be null", parameterName));
+      raiseNotNullError(parameterName);
     }
     return reference;
   }
