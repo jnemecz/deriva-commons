@@ -1,4 +1,4 @@
-package cz.deriva.commons;
+package cz.deriva.commons.utils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -23,6 +23,7 @@ public class MathUtils {
     int index = string.indexOf(".");
     return index < 0 ? 0 : string.length() - index - 1;
   }
+
 
   public static BigDecimal round(final BigDecimal value, int places) {
     AssertUtils.validState((places > 0 && places < 6), "Pocet desetinnych mist musi byt <1;5>");

@@ -1,11 +1,10 @@
-package cz.deriva.commons;
+package cz.deriva.commons.utils;
 
 import java.math.BigDecimal;
 import java.util.regex.Pattern;
 
 public final class ValidationUtils {
 
-  private final static BigDecimal BIGDECIMAL_MINUS_ONE = BigDecimal.valueOf(-1);
   private final static Double DOUBLE_ZERO = 0d;
 
   private ValidationUtils() {
@@ -16,6 +15,28 @@ public final class ValidationUtils {
       return false;
     }
     return Double.compare(value, DOUBLE_ZERO) > 0;
+  }
+
+  public static boolean isSame(final BigDecimal value1, final BigDecimal value2) {
+
+    if (value1 == null || value2 == null) {
+      return false;
+    }
+
+    if (value1.getClass() != BigDecimal.class || value2.getClass() != BigDecimal.class) {
+      return false;
+    }
+
+    return value1.compareTo(value2) == 0;
+
+  }
+
+  public static boolean isZero(final BigDecimal value) {
+    if (value == null) {
+      return false;
+    } else {
+      return value.compareTo(BigDecimal.ZERO) == 0;
+    }
   }
 
   public static boolean isGteZero(final Double value) {
@@ -32,11 +53,67 @@ public final class ValidationUtils {
     return value > 0;
   }
 
+  /**
+   * @param value         konrolovana hodnota
+   * @param fromInclusive hodnota zacatku intervalu (vcetne)
+   * @param toInclusive   hodnota konce intervalu (vcetne)
+   * @return true pokud je hodnota v danem rozmezi, jinak false
+   */
+  public static boolean between(final BigDecimal value, final BigDecimal fromInclusive, final BigDecimal toInclusive) {
+
+    // nektera hodnota neni vyplnena - neni co kontrolovat
+    if (value == null || fromInclusive == null || toInclusive == null) {
+      return false;
+    }
+
+    // Konec intervalu neni vetsi nebo roven zacatku
+    if (!ValidationUtils.isGte(toInclusive, fromInclusive)) {
+      return false;
+    }
+
+    // Kontrolvoana hodnota neni vetsi nebo rovna zacatku intervalu
+    if (!ValidationUtils.isGte(value, fromInclusive)) {
+      return false;
+    }
+
+    // Kontrolvoana hodnota neni mensi nebo rovna konci intervalu
+    return ValidationUtils.isLte(value, toInclusive);
+
+  }
+
   public static boolean isGteZero(final BigDecimal fieldValue) {
     if (fieldValue == null) {
       return false;
     }
     return fieldValue.compareTo(BigDecimal.ZERO) >= 0;
+  }
+
+  public static boolean isGte(final BigDecimal fieldValue, final BigDecimal checkValue) {
+    if (fieldValue == null || checkValue == null) {
+      return false;
+    }
+    return fieldValue.compareTo(checkValue) >= 0;
+  }
+
+  public static boolean isGt(final BigDecimal fieldValue, final BigDecimal checkValue) {
+    if (fieldValue == null || checkValue == null) {
+      return false;
+    }
+    return fieldValue.compareTo(checkValue) == 1;
+  }
+
+  public static boolean isLte(final BigDecimal fieldValue, final BigDecimal checkValue) {
+    if (fieldValue == null || checkValue == null) {
+      return false;
+    }
+    return fieldValue.compareTo(checkValue) <= 0;
+  }
+
+  public static boolean isLt(final BigDecimal fieldValue, final BigDecimal checkValue) {
+    if (fieldValue == null || checkValue == null) {
+      return false;
+    }
+    return fieldValue.compareTo(checkValue) == -1;
   }
 
   public static boolean isGtZero(final BigDecimal fieldValue) {

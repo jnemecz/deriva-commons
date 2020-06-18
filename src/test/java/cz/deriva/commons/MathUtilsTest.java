@@ -1,5 +1,6 @@
 package cz.deriva.commons;
 
+import cz.deriva.commons.utils.MathUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -55,6 +56,7 @@ class MathUtilsTest {
       assertEquals("0.00", rest.toString());
 
     }
+
     @Test
     public void test5() {
 

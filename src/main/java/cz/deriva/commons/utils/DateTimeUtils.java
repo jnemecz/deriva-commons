@@ -1,13 +1,15 @@
-package cz.deriva.commons;
+package cz.deriva.commons.utils;
 
 import java.time.Clock;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * <p>Utility class pro praci s datem a casem vcetne jejich prevodu mezi casovymi zonami.</p>
@@ -140,6 +142,38 @@ public final class DateTimeUtils {
     return timestamp.toLocalDateTime().atZone(ZoneId.of(timeZone));
   }
 
+  /**
+   * Vraci mistni datum a cas v UTC time zone.
+   *
+   * @return datum a cas v UTC
+   */
+  public static LocalDateTime utcNow() {
+    return LocalDateTime.now(Clock.systemUTC());
+  }
+
+  public static LocalDateTime fromUnixtimestampMilis(final Long utcUnixTimeStampMilis){
+    AssertUtils.isGtZero(utcUnixTimeStampMilis,"utcUnixTimeStampMilis");
+    return LocalDateTime.ofInstant(Instant.ofEpochMilli(utcUnixTimeStampMilis), ZoneId.of("UTC"));
+  }
+
+  public static long toUnixtimestampSeconds(final LocalDateTime localDateTime, final ZoneId zoneId) {
+    AssertUtils.notNull(localDateTime, "localDateTime");
+    AssertUtils.notNull(zoneId, "zoneId");
+    return localDateTime.atZone(zoneId).toEpochSecond();
+  }
+
+  public static long toUnixtimestampMillis(final LocalDateTime localDateTime, final ZoneId zoneId) {
+    return DateTimeUtils.toUnixtimestampSeconds(localDateTime, zoneId) * 1000;
+  }
+
+  public static long toUnixtimestampMillis(final LocalDateTime localDateTime) {
+    return DateTimeUtils.toUnixtimestampMillis(localDateTime, ZoneId.systemDefault());
+  }
+
+  public static long toUnixtimestampSeconds(final LocalDateTime localDateTime) {
+    return DateTimeUtils.toUnixtimestampSeconds(localDateTime, ZoneId.systemDefault());
+  }
+
   public static java.sql.Timestamp toSqlTimeStamp(final ZonedDateTime zonedDateTime) {
     AssertUtils.notNull(zonedDateTime, "zonedDateTime");
     return java.sql.Timestamp.valueOf(zonedDateTime.toLocalDateTime());
@@ -156,6 +190,16 @@ public final class DateTimeUtils {
     Instant instant = Instant.ofEpochMilli(date.getTime());
     LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
     return ldt;
+  }
+
+  public static Clock getClock(int year, int month, int day, int hour, int minute, int second, final ZoneOffset zone) {
+    final Instant ins = LocalDate.of(year, month, day).atTime(hour, minute, second).toInstant(zone);
+    return Clock.fixed(ins, zone);
+  }
+
+  public static Clock getUtcClock(int year, int month, int day, int hour, int minute, int second) {
+    final Instant ins = LocalDate.of(year, month, day).atTime(hour, minute, second).toInstant(ZoneOffset.UTC);
+    return Clock.fixed(ins, ZoneOffset.UTC);
   }
 
   public static java.util.Date toDate(final ZonedDateTime localDateTime) {

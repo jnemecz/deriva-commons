@@ -1,4 +1,4 @@
-package cz.deriva.commons;
+package cz.deriva.commons.utils;
 
 import java.math.BigDecimal;
 
@@ -60,10 +60,60 @@ public final class AssertUtils {
     }
   }
 
+  public static void isGteOne(final BigDecimal value, final String parameterName) {
+    if (!ValidationUtils.isGte(value, BigDecimal.ONE)) {
+      throw new IllegalArgumentException(String.format("[Assertion failed] - argument %s is required; it must be greater or equal than 1", parameterName));
+    }
+  }
+
+  public static void isGte(final BigDecimal checkValue, final BigDecimal intervalValue, final String parameterName) {
+    if (!ValidationUtils.isGte(checkValue, intervalValue)) {
+      throw new IllegalArgumentException(String.format("[Assertion failed] - argument %s is required; it must be greater or equal than %s", parameterName, intervalValue));
+    }
+  }
+
+  public static void isSame(final BigDecimal value1, final BigDecimal value2, final String parameterName) {
+    if (!ValidationUtils.isSame(value1, value2)) {
+      throw new IllegalArgumentException(String.format("[Assertion failed] - argument %s is required; it must be same to %s", parameterName, value2));
+    }
+  }
+
+  public static void isLte(final BigDecimal checkValue, final BigDecimal intervalValue, final String parameterName) {
+    if (!ValidationUtils.isLte(checkValue, intervalValue)) {
+      throw new IllegalArgumentException(String.format("[Assertion failed] - argument %s is required; it must be lower or equal than %s", parameterName, intervalValue));
+    }
+  }
+
+  public static void isGt(final BigDecimal checkValue, final BigDecimal intervalValue, final String parameterName) {
+    if (!ValidationUtils.isGt(checkValue, intervalValue)) {
+      throw new IllegalArgumentException(String.format("[Assertion failed] - argument %s is required; it must be greater or equal than %s", parameterName, intervalValue));
+    }
+  }
+
+  public static void isLt(final BigDecimal checkValue, final BigDecimal intervalValue, final String parameterName) {
+    if (!ValidationUtils.isLt(checkValue, intervalValue)) {
+      throw new IllegalArgumentException(String.format("[Assertion failed] - argument %s is required; it must be lower or equal than %s", parameterName, intervalValue));
+    }
+  }
+
+  public static void isLteOne(final BigDecimal value, final String parameterName) {
+    if (!ValidationUtils.isLte(value, BigDecimal.ONE)) {
+      throw new IllegalArgumentException(String.format("[Assertion failed] - argument %s is required; it must be lower or equal than 1", parameterName));
+    }
+  }
+
   public static void isGtZero(final Long value, final String parameterName) {
     if (!ValidationUtils.isGtZero(value)) {
       throw new IllegalArgumentException(String.format("[Assertion failed] - argument %s is required; it must be greater or equal than 0", parameterName));
     }
+  }
+
+  public static void between(final BigDecimal value, final BigDecimal fromInclusive, final BigDecimal toInclusive, final String parameterName) {
+
+    if (!ValidationUtils.between(value, fromInclusive, toInclusive)) {
+      throw new IllegalArgumentException(String.format("[Assertion failed] - argument %s is not within the range", parameterName));
+    }
+
   }
 
   public static void isGtZero(final BigDecimal value, final String parameterName) {

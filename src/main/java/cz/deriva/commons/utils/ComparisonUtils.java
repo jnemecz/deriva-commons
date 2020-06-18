@@ -1,4 +1,4 @@
-package cz.deriva.commons;
+package cz.deriva.commons.utils;
 
 import java.math.BigDecimal;
 
@@ -23,13 +23,19 @@ public class ComparisonUtils {
     }
   }
 
+  public static <T> boolean sameWithNull(T object1, T object2) {
 
-  public static <T> boolean sameWithNull(final T object1, final T object2) {
-    if (object1 != null && object2 == null) {
-      return false;
-    } else {
-      return object1 == null && object2 != null ? false : object1.equals(object2);
+    // Oba dva jsou null
+    if (object1 == null && object2 == null) {
+      return true;
     }
+
+    if ((object1 != null && object2 == null) || (object1 == null && object2 != null)) {
+      return false;
+    }
+
+    return object1.equals(object2);
+
   }
 
 }
