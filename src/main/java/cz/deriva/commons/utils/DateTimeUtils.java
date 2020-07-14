@@ -9,7 +9,6 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.TimeZone;
 
 /**
  * <p>Utility class pro praci s datem a casem vcetne jejich prevodu mezi casovymi zonami.</p>
@@ -151,8 +150,8 @@ public final class DateTimeUtils {
     return LocalDateTime.now(Clock.systemUTC());
   }
 
-  public static LocalDateTime fromUnixtimestampMilis(final Long utcUnixTimeStampMilis){
-    AssertUtils.isGtZero(utcUnixTimeStampMilis,"utcUnixTimeStampMilis");
+  public static LocalDateTime fromUnixtimestampMilis(final Long utcUnixTimeStampMilis) {
+    AssertUtils.isGtZero(utcUnixTimeStampMilis, "utcUnixTimeStampMilis");
     return LocalDateTime.ofInstant(Instant.ofEpochMilli(utcUnixTimeStampMilis), ZoneId.of("UTC"));
   }
 
@@ -221,6 +220,24 @@ public final class DateTimeUtils {
     AssertUtils.notNull(minutes, "minutes");
     AssertUtils.validState(minutes >= 0, "Pocet minut musi byt > 0");
     return MathUtils.round(minutes / (double) 60, 2);
+  }
+
+  public static boolean between(LocalDate checkDate, LocalDate from, LocalDate to) {
+
+    AssertUtils.notNull(checkDate, "checkDate");
+    AssertUtils.notNull(from, "from");
+    AssertUtils.notNull(to, "to");
+
+    if (checkDate.isBefore(from)) {
+      return false;
+    }
+
+    if (checkDate.isAfter(to)) {
+      return false;
+    }
+
+    return true;
+
   }
 
 }

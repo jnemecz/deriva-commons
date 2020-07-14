@@ -273,6 +273,74 @@ class DateTimeUtilsTest {
   }
 
   @Nested
+  class Range {
+
+    @Test
+    public void testStartRange() {
+
+      LocalDate from = LocalDate.of(2020, 7, 1);
+      LocalDate to = LocalDate.of(2020, 7, 31);
+
+      final LocalDate checkDate = from;
+
+      assertAll(
+          () -> assertTrue(DateTimeUtils.between(checkDate, from, to))
+      );
+
+    }
+
+    @Test
+    public void testEndRange() {
+
+      LocalDate from = LocalDate.of(2020, 7, 1);
+      LocalDate to = LocalDate.of(2020, 7, 31);
+
+      final LocalDate checkDate = to;
+
+      assertAll(
+          () -> assertTrue(DateTimeUtils.between(checkDate, from, to))
+      );
+
+    }
+
+    @Test
+    public void testInRange() {
+
+      LocalDate from = LocalDate.of(2020, 7, 1);
+      LocalDate to = LocalDate.of(2020, 7, 31);
+
+      final LocalDate checkDate = from.plusDays(2);
+
+      assertAll(
+          () -> assertTrue(DateTimeUtils.between(checkDate, from, to))
+      );
+
+    }
+
+    @Test
+    public void testNarrowRange() {
+
+      LocalDate from = LocalDate.of(2020, 7, 1);
+
+      assertAll(
+          () -> assertTrue(DateTimeUtils.between(from, from, from))
+      );
+
+    }
+
+    @Test
+    public void testOutRange() {
+
+      LocalDate from = LocalDate.of(2020, 7, 1);
+
+      assertAll(
+          () -> assertFalse(DateTimeUtils.between(from.plusYears(1), from, from))
+      );
+
+    }
+
+  }
+
   class ToDate {
 
     @Test
@@ -282,6 +350,8 @@ class DateTimeUtilsTest {
 
       Calendar cal = Calendar.getInstance();
       cal.setTime(dd);
+
+      // System.out.println(String.format("HODINA: %d", cal.get(Calendar.HOUR_OF_DAY)));
 
       assertAll(
           () -> assertNotNull(dd),
