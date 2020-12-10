@@ -13,6 +13,7 @@ public class BaseExceptionCodes {
   public static String ENTITY_ERROR = "ENTITY_ERROR";
   public static String NOT_SUPPORTED_OPERATION_EXCEPTION = "NOT_SUPPORTED_OPERATION_EXCEPTION";
   public static String NOT_IMPLEMENTED_ERROR = "NOT_IMPLEMENTED_ERROR";
+  public static String GENERAL_APPLICATION_ERROR = "GENERAL_APPLICATION_ERROR";
 
   // Validacni chyby
   public static String NULL_VALUE = "NULL_VALUE";

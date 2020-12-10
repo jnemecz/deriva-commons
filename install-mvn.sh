@@ -4,5 +4,5 @@
 
 mvn clean
 mvn package
-mvn install:install-file -Dfile=target/deriva-commons-1.1.21.jar -DgroupId=cz.deriva.commons \
--DartifactId=deriva-commons -Dversion=1.1.21 -Dpackaging=jar -DgenerationPom=true
+mvn install:install-file -Dfile=target/deriva-commons-1.1.26.jar -DgroupId=cz.deriva.commons \
+-DartifactId=deriva-commons -Dversion=1.1.26 -Dpackaging=jar -DgenerationPom=true

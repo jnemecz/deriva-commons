@@ -46,6 +46,13 @@ public final class ValidationUtils {
     return Double.compare(value, DOUBLE_ZERO) >= 0;
   }
 
+  public static boolean isGteZero(final Long value) {
+    if (value == null) {
+      return false;
+    }
+    return value >= 0L;
+  }
+
   public static boolean isGtZero(final Long value) {
     if (value == null) {
       return false;

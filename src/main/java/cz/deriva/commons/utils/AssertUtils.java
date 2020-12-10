@@ -54,6 +54,12 @@ public final class AssertUtils {
     }
   }
 
+  public static void isGteZero(final Long value, final String parameterName) {
+    if (!ValidationUtils.isGteZero(value)) {
+      throw new IllegalArgumentException(String.format("[Assertion failed] - argument %s is required; it must be greater or equal than 0", parameterName));
+    }
+  }
+
   public static void isGteZero(final BigDecimal value, final String parameterName) {
     if (!ValidationUtils.isGteZero(value)) {
       throw new IllegalArgumentException(String.format("[Assertion failed] - argument %s is required; it must be greater or equal than 0", parameterName));
