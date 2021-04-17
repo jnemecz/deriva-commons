@@ -5,10 +5,71 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ValidationUtilsTest {
+
+  @Nested
+  class ListEqualsIgnoreOrder {
+
+    @Test
+    public void test1() {
+
+
+      final List<Integer> list1 = Arrays.asList(1, 2, 3);
+      final List<Integer> list2 = Arrays.asList(1, 2, 3, 4);
+
+      assertFalse(ValidationUtils.listEqualsIgnoreOrder(list1, list2));
+
+    }
+
+    @Test
+    public void test2() {
+
+      final List<Integer> list1 = Arrays.asList(1, 2, 3);
+      final List<Integer> list2 = Arrays.asList(1, 2, 3);
+
+      assertTrue(ValidationUtils.listEqualsIgnoreOrder(list1, list2));
+
+    }
+
+    @Test
+    public void testEmpty() {
+
+      final List<Integer> list1 = new ArrayList<>();
+      final List<Integer> list2 = new ArrayList<>();
+
+      assertTrue(ValidationUtils.listEqualsIgnoreOrder(list1, list2));
+
+    }
+
+    @Test
+    public void testEmpty1() {
+
+      final List<String> list1 = Arrays.asList("");
+      final List<String> list2 = Arrays.asList("");
+
+      assertTrue(ValidationUtils.listEqualsIgnoreOrder(list1, list2));
+
+    }
+
+    @Test
+    public void testEmpty2() {
+
+      final List<String> list2 = Arrays.asList();
+      assertFalse(ValidationUtils.listEqualsIgnoreOrder(null, list2));
+
+    }
+    @Test
+    public void testEmpty3() {
+      assertFalse(ValidationUtils.listEqualsIgnoreOrder(null, null));
+    }
+
+  }
 
   @Nested
   class Between {

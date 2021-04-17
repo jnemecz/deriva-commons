@@ -9,6 +9,8 @@
         <module name="deriva-commons" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.8" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="deriva-commons" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

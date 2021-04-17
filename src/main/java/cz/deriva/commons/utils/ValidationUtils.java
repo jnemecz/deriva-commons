@@ -1,6 +1,8 @@
 package cz.deriva.commons.utils;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public final class ValidationUtils {
@@ -15,6 +17,27 @@ public final class ValidationUtils {
       return false;
     }
     return Double.compare(value, DOUBLE_ZERO) > 0;
+  }
+
+  /**
+   * Kontroluje, jestli jsou seznamy shodne bez ohledu na poradi hodnot.
+   *
+   * @param list1 prvni kontrolovany seznam
+   * @param list2 druhy kontrolovany seznam
+   * @param <T>   typ hodnot v seznamu
+   * @return {@code true} pokud jsou shodne, jinak {@code false}
+   */
+  public static <T> boolean listEqualsIgnoreOrder(final List<T> list1, final List<T> list2) {
+
+    if ((list1 == null && list2 != null) || (list1 != null && list2 == null)) {
+      return false;
+    }
+
+    if (list1 == null && list2 == null) {
+      return false;
+    }
+
+    return new HashSet<>(list1).equals(new HashSet<>(list2));
   }
 
   public static boolean isSame(final BigDecimal value1, final BigDecimal value2) {
