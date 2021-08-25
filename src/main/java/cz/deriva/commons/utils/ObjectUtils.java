@@ -19,52 +19,59 @@ public class ObjectUtils {
     return bigDecimal;
   }
 
-  public static BigDecimal safeBigDecimal(final String value) {
-
+  public static BigDecimal safeBigDecimal(final String value, final BigDecimal fallBackValue) {
     if (StringUtils.isBlank(value)) {
-      return null;
+      return fallBackValue;
     } else {
 
       try {
         return new BigDecimal(value);
       } catch (Exception e) {
-        return null;
+        return fallBackValue;
       }
 
     }
-
   }
 
-  public static Long safeLong(final String value) {
+  public static BigDecimal safeBigDecimal(final String value) {
+    return ObjectUtils.safeBigDecimal(value, null);
+  }
 
+  public static Long safeLong(final String value, final Long fallBackValue) {
     if (StringUtils.isBlank(value)) {
-      return null;
+      return fallBackValue;
     } else {
 
       try {
         return Long.valueOf(value);
       } catch (Exception e) {
-        return null;
+        return fallBackValue;
       }
 
     }
-
   }
 
-  public static Integer safeInteger(final String value) {
+  public static Long safeLong(final String value) {
+    return ObjectUtils.safeLong(value, null);
+  }
+
+  public static Integer safeInteger(final String value, Integer fallbackValue) {
 
     if (StringUtils.isBlank(value)) {
-      return null;
+      return fallbackValue;
     } else {
 
       try {
         return Integer.valueOf(value);
       } catch (Exception e) {
-        return null;
+        return fallbackValue;
       }
 
     }
+  }
 
+  public static Integer safeInteger(final String value) {
+    return ObjectUtils.safeInteger(value, null);
   }
 
 }

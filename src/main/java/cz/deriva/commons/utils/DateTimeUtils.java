@@ -151,8 +151,12 @@ public final class DateTimeUtils {
   }
 
   public static LocalDateTime fromUnixtimestampMilis(final Long utcUnixTimeStampMilis) {
-    AssertUtils.isGtZero(utcUnixTimeStampMilis, "utcUnixTimeStampMilis");
-    return LocalDateTime.ofInstant(Instant.ofEpochMilli(utcUnixTimeStampMilis), ZoneId.of("UTC"));
+    return DateTimeUtils.fromUnixtimestampMilis(utcUnixTimeStampMilis, ZoneId.of("UTC"));
+  }
+
+  public static LocalDateTime fromUnixtimestampMilis(final Long unixTimeStampMilis, final ZoneId zoneId) {
+    AssertUtils.isGtZero(unixTimeStampMilis, "utcUnixTimeStampMilis");
+    return LocalDateTime.ofInstant(Instant.ofEpochMilli(unixTimeStampMilis), zoneId);
   }
 
   public static long toUnixtimestampSeconds(final LocalDateTime localDateTime, final ZoneId zoneId) {

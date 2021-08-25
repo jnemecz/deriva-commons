@@ -139,6 +139,14 @@ public final class ValidationUtils {
     return fieldValue.compareTo(checkValue) <= 0;
   }
 
+  public static boolean isLtZero(final BigDecimal fieldValue) {
+    return ValidationUtils.isLt(fieldValue, BigDecimal.ZERO);
+  }
+
+  public static boolean isLteZero(final BigDecimal fieldValue) {
+    return ValidationUtils.isLte(fieldValue, BigDecimal.ZERO);
+  }
+
   public static boolean isLt(final BigDecimal fieldValue, final BigDecimal checkValue) {
     if (fieldValue == null || checkValue == null) {
       return false;
