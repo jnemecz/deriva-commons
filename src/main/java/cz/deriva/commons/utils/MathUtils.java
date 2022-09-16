@@ -17,6 +17,14 @@ public class MathUtils {
   private MathUtils() {
   }
 
+  public static BigDecimal divide(final BigDecimal value1, final BigDecimal value2, int decimals) {
+    return value1.divide(value2, decimals, BigDecimal.ROUND_HALF_UP);
+  }
+
+  public static BigDecimal divide(final BigDecimal value1, final BigDecimal value2) {
+    return MathUtils.divide(value1, value2, 5);
+  }
+
   public static int getNumberOfDecimalPlaces(final BigDecimal bigDecimal) {
     AssertUtils.notNull(bigDecimal, "bigDecimal");
     String string = bigDecimal.stripTrailingZeros().toPlainString();

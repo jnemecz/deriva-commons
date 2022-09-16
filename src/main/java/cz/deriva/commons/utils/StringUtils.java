@@ -16,6 +16,13 @@ public final class StringUtils {
     return !isBlank(cs);
   }
 
+  public static String safeNull(String name) {
+    if (!StringUtils.isBlank(name)) {
+      return name;
+    }
+    return null;
+  }
+
   public static boolean equals(final String value1, final String value2) {
 
     AssertUtils.notNull(value1, "Value 1 should not be null");

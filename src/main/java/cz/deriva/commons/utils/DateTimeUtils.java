@@ -4,11 +4,14 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>Utility class pro praci s datem a casem vcetne jejich prevodu mezi casovymi zonami.</p>
@@ -157,6 +160,23 @@ public final class DateTimeUtils {
   public static LocalDateTime fromUnixtimestampMilis(final Long unixTimeStampMilis, final ZoneId zoneId) {
     AssertUtils.isGtZero(unixTimeStampMilis, "utcUnixTimeStampMilis");
     return LocalDateTime.ofInstant(Instant.ofEpochMilli(unixTimeStampMilis), zoneId);
+  }
+
+  private List<LocalDate> getAllMonthDays(YearMonth yearMonth) {
+    AssertUtils.notNull(yearMonth, "yearMonth");
+
+    LocalDate date = LocalDate.of(yearMonth.getYear(), yearMonth.getMonth(), 1);
+    final LocalDate end = date.plusMonths(1);
+
+    List<LocalDate> dates = new ArrayList<>();
+
+    while (date.isBefore(end)) {
+      dates.add(date);
+      date = date.plusDays(1);
+    }
+
+    return dates;
+
   }
 
   public static long toUnixtimestampSeconds(final LocalDateTime localDateTime, final ZoneId zoneId) {
