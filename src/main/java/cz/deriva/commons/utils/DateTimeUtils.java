@@ -46,6 +46,17 @@ public final class DateTimeUtils {
     return LocalDateTime.now(CLOCK);
   }
 
+  public static boolean isInRange(LocalDate checkDate, LocalDate from, LocalDate to) {
+    AssertUtils.notNull(checkDate, "checkDate");
+    AssertUtils.notNull(from, "from");
+    AssertUtils.notNull(to, "to");
+    if (checkDate.isBefore(from))
+      return false;
+    if (checkDate.isAfter(to))
+      return false;
+    return true;
+  }
+
   /**
    * Vraci pocet minut zaokrouhleno nahoru na pulhodiny.
    *
