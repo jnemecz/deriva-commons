@@ -17,6 +17,35 @@ public class MathUtils {
   private MathUtils() {
   }
 
+
+  /**
+   * Zaokrhlouje na danou hodnotu
+   *
+   * @param value
+   * @param increment
+   * @param roundingMode
+   * @return see: https://stackoverflow.com/a/16665378/1315357
+   */
+  public static BigDecimal round(
+      BigDecimal value,
+      BigDecimal increment,
+      RoundingMode roundingMode
+  ) {
+
+    AssertUtils.notNull(value, "value");
+    AssertUtils.notNull(increment, "increment");
+    AssertUtils.notNull(roundingMode, "roundingMode");
+
+    if (increment.signum() == 0) {
+      // 0 increment does not make much sense, but prevent division by 0
+      return value;
+    } else {
+      BigDecimal divided = value.divide(increment, 0, roundingMode);
+      BigDecimal result = divided.multiply(increment);
+      return result;
+    }
+  }
+
   public static BigDecimal divide(final BigDecimal value1, final BigDecimal value2, int decimals) {
     return value1.divide(value2, decimals, BigDecimal.ROUND_HALF_UP);
   }

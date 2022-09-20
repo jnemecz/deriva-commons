@@ -1,6 +1,7 @@
 package cz.deriva.commons.data.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import cz.deriva.commons.utils.AssertUtils;
 import cz.deriva.commons.utils.ValidationUtils;
 
 import java.math.BigDecimal;
@@ -19,12 +20,17 @@ public class PercentStructure {
    */
   public PercentStructure(final BigDecimal fraction) {
 
+    AssertUtils.notNull(fraction,"fraction");
+
     this.fraction = fraction;
     this.percents = this.fraction.multiply(BigDecimal.valueOf(100));
 
   }
 
   public static PercentStructure diff(final BigDecimal part, final BigDecimal total) {
+
+    AssertUtils.notNull(part,"part");
+    AssertUtils.notNull(total,"total");
 
     BigDecimal diff = BigDecimal.ZERO;
 
@@ -41,7 +47,7 @@ public class PercentStructure {
   }
 
   public BigDecimal getFraction() {
-    return fraction;
+    return  fraction;
   }
 
   public BigDecimal getPercents() {

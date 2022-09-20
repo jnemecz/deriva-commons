@@ -19,6 +19,16 @@ public class ObjectUtils {
     return bigDecimal;
   }
 
+  public static BigDecimal safeBigDecimal(final BigDecimal value, final BigDecimal fallBackValue) {
+
+    if (value != null) {
+      return value;
+    } else {
+      return fallBackValue;
+    }
+
+  }
+
   public static BigDecimal safeBigDecimal(final String value, final BigDecimal fallBackValue) {
     if (StringUtils.isBlank(value)) {
       return fallBackValue;
