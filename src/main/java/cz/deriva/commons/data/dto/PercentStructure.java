@@ -15,22 +15,46 @@ public class PercentStructure {
   @JsonProperty("percents")
   private final BigDecimal percents;
 
+  @JsonProperty("part")
+  private BigDecimal part;
+
+  @JsonProperty("total")
+  private BigDecimal total;
+
   /**
    * @param fraction hodnota 0.1 -> 10%, 2 => 200%
    */
   public PercentStructure(final BigDecimal fraction) {
 
-    AssertUtils.notNull(fraction,"fraction");
+    AssertUtils.notNull(fraction, "fraction");
 
     this.fraction = fraction;
     this.percents = this.fraction.multiply(BigDecimal.valueOf(100));
+
+    this.part = BigDecimal.ZERO;
+    this.total = BigDecimal.ZERO;
+
+  }
+
+  public PercentStructure(BigDecimal total, BigDecimal part) {
+
+    this(PercentStructure.computerDiff(part, total));
+
+    this.total = total;
+    this.part = part;
 
   }
 
   public static PercentStructure diff(final BigDecimal part, final BigDecimal total) {
 
-    AssertUtils.notNull(part,"part");
-    AssertUtils.notNull(total,"total");
+    AssertUtils.notNull(part, "part");
+    AssertUtils.notNull(total, "total");
+
+    return new PercentStructure(total, part);
+
+  }
+
+  private static BigDecimal computerDiff(BigDecimal part, BigDecimal total) {
 
     BigDecimal diff = BigDecimal.ZERO;
 
@@ -38,7 +62,7 @@ public class PercentStructure {
       diff = part.divide(total, 3, RoundingMode.HALF_DOWN);
     }
 
-    return new PercentStructure(diff);
+    return diff;
 
   }
 
@@ -47,7 +71,7 @@ public class PercentStructure {
   }
 
   public BigDecimal getFraction() {
-    return  fraction;
+    return fraction;
   }
 
   public BigDecimal getPercents() {

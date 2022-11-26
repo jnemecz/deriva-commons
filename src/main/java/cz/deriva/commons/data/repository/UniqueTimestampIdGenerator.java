@@ -1,5 +1,7 @@
 package cz.deriva.commons.data.repository;
 
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -11,10 +13,16 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public final class UniqueTimestampIdGenerator implements IdGenerationStrategy {
 
-  private static final AtomicLong TS = new AtomicLong();
+  private static final AtomicLong TS_LONG = new AtomicLong();
+  private static final AtomicInteger TS_INTEGER = new AtomicInteger();
 
   public Long nextValue() {
     return getUniqueTimestamp();
+  }
+
+  @Override
+  public Integer nextIntValue() {
+    return getUniqueIntegerTimestamp();
   }
 
   /**** PRIVATE STUFF *******************************************************************/
@@ -26,14 +34,30 @@ public final class UniqueTimestampIdGenerator implements IdGenerationStrategy {
 
     while (true) {
       // Aktualni hodnota
-      long value = TS.get();
+      long value = TS_LONG.get();
       if (micros <= value) {
         micros = value + 1;
       }
-      if (TS.compareAndSet(value, micros)) {
+      if (TS_LONG.compareAndSet(value, micros)) {
         return micros;
       }
     }
+
+  }
+
+  private int getUniqueIntegerTimestamp() {
+
+    int micros = new Long(System.currentTimeMillis()).intValue();
+
+    int value;
+    do {
+      value = TS_INTEGER.get();
+      if (micros <= value) {
+        micros = value + 1;
+      }
+    } while (!TS_INTEGER.compareAndSet(value, micros));
+
+    return micros;
 
   }
 

@@ -1,7 +1,6 @@
 package cz.deriva.commons.utils;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
+import cz.deriva.commons.exceptions.NotSupportedOperationException;
 
 public final class ReflectionUtils {
 
@@ -11,11 +10,15 @@ public final class ReflectionUtils {
    * @param clazz     trida ve ktere se ma hodnota zmenit
    * @param fieldName nazev parametru, ktery se ma menit
    * @param value     nova hodnota parametru
+   *
    * @throws ReflectiveOperationException
    */
+  @Deprecated
   public static void setFinalStaticField(Class<?> clazz, String fieldName, Object value) {
 
-    try {
+    throw new NotSupportedOperationException("Since Java 12 reflection no longer works!");
+
+    /*try {
 
       Field field = clazz.getDeclaredField(fieldName);
       field.setAccessible(true);
@@ -26,7 +29,7 @@ public final class ReflectionUtils {
 
     } catch (Exception e) {
       throw new RuntimeException(e);
-    }
+    }*/
   }
 
 }

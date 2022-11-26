@@ -14,4 +14,11 @@ public interface IdGenerationStrategy {
    */
   Long nextValue();
 
+  /**
+   * Vraci unikatni integer hodnotu
+   *
+   * @return
+   */
+  Integer nextIntValue();
+
 }

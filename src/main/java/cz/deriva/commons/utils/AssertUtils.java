@@ -32,6 +32,13 @@ public final class AssertUtils {
     throw new IllegalArgumentException(message);
   }
 
+  public static void raiseNullError(final String fieldName) {
+    if (StringUtils.isNotBlank(fieldName)) {
+      raiseError(String.format("[Assertion failed] - argument %s must be null", fieldName));
+    } else {
+      raiseError("[Assertion failed] - argument must be null");
+    }
+  }
   public static void raiseNotNullError(final String fieldName) {
     if (StringUtils.isNotBlank(fieldName)) {
       raiseError(String.format("[Assertion failed] - argument %s is required; it must not be null", fieldName));
@@ -138,6 +145,20 @@ public final class AssertUtils {
     if (!expression) {
       throw new IllegalArgumentException(String.format("[Assertion failed] - the validated state is false; %s", message));
     }
+  }
+
+  public static <T> T forceNull(final T reference) {
+    if (reference != null) {
+      raiseNullError(null);
+    }
+    return reference;
+  }
+
+  public static <T> T forceNull(final T reference, final String parameterName) {
+    if (reference != null) {
+      raiseNullError(parameterName);
+    }
+    return reference;
   }
 
   public static <T> T notNull(final T reference) {

@@ -46,14 +46,27 @@ public final class DateTimeUtils {
     return LocalDateTime.now(CLOCK);
   }
 
+  /**
+   * Prevede java.util.Date (UTC) na java.time.LocalDateTime (UTC).
+   *
+   * @param dateTime
+   *
+   * @return
+   */
+  public static LocalDateTime dateToUtcLocalDateTime(final Date dateTime) {
+    AssertUtils.notNull(dateTime, "dateTime");
+
+    // Prevod na UTC
+    return ZonedDateTime.ofInstant(dateTime.toInstant(), UTC_TIME_ZONE).toLocalDateTime();
+
+  }
+
   public static boolean isInRange(LocalDate checkDate, LocalDate from, LocalDate to) {
     AssertUtils.notNull(checkDate, "checkDate");
     AssertUtils.notNull(from, "from");
     AssertUtils.notNull(to, "to");
-    if (checkDate.isBefore(from))
-      return false;
-    if (checkDate.isAfter(to))
-      return false;
+    if (checkDate.isBefore(from)) return false;
+    if (checkDate.isAfter(to)) return false;
     return true;
   }
 
@@ -61,6 +74,7 @@ public final class DateTimeUtils {
    * Vraci pocet minut zaokrouhleno nahoru na pulhodiny.
    *
    * @param minutes
+   *
    * @return minuty zaokrouhlene na pulhodinu nahoru
    */
   public static double ceilMinutesToHalfHour(double minutes) {
@@ -88,6 +102,7 @@ public final class DateTimeUtils {
    * <p>Parsuje string reprezentujici datum a cas s casovou zonou.</p>
    *
    * @param dateTimeAsString reprezentace data a casu s casovou zonou
+   *
    * @return rozparsovany datum a cas podle stringove reprezentace
    */
   public static ZonedDateTime parse(final String dateTimeAsString) {
@@ -102,10 +117,28 @@ public final class DateTimeUtils {
    * @return aktualni datum a cas podle mistnost prostredi
    */
   public static ZonedDateTime localDateWithTimeZone() {
-    return ZonedDateTime.of(
-        DateTimeUtils.actualDateTime(),
-        DateTimeUtils.localTimeZone()
-    );
+    return ZonedDateTime.of(DateTimeUtils.actualDateTime(), DateTimeUtils.localTimeZone());
+  }
+
+  /**
+   * Parsuje ISO format data a casu do lokalniho casu.
+   *
+   * @param value parsovana hodnota ve formatu '2011-12-03T10:15:30Z'
+   *
+   * @return Pokud je parsovana hodnota null nebo dojde k chybe, vraci null.
+   */
+  public static LocalDateTime safeLocalDateTime(String value) {
+
+    if (StringUtils.isBlank(value)) {
+      return null;
+    }
+
+    try {
+      return LocalDateTime.parse(value, DateTimeFormatter.ISO_INSTANT);
+    } catch (Exception e) {
+      return null;
+    }
+
   }
 
   /**
@@ -140,6 +173,7 @@ public final class DateTimeUtils {
    * <p>Prevede datum a cas do {@code String}</p>
    *
    * @param dateTime prevadeny datum a cas
+   *
    * @return prevedeny datum a cas
    */
   public static String toString(final ZonedDateTime dateTime) {
@@ -171,23 +205,6 @@ public final class DateTimeUtils {
   public static LocalDateTime fromUnixtimestampMilis(final Long unixTimeStampMilis, final ZoneId zoneId) {
     AssertUtils.isGtZero(unixTimeStampMilis, "utcUnixTimeStampMilis");
     return LocalDateTime.ofInstant(Instant.ofEpochMilli(unixTimeStampMilis), zoneId);
-  }
-
-  private List<LocalDate> getAllMonthDays(YearMonth yearMonth) {
-    AssertUtils.notNull(yearMonth, "yearMonth");
-
-    LocalDate date = LocalDate.of(yearMonth.getYear(), yearMonth.getMonth(), 1);
-    final LocalDate end = date.plusMonths(1);
-
-    List<LocalDate> dates = new ArrayList<>();
-
-    while (date.isBefore(end)) {
-      dates.add(date);
-      date = date.plusDays(1);
-    }
-
-    return dates;
-
   }
 
   public static long toUnixtimestampSeconds(final LocalDateTime localDateTime, final ZoneId zoneId) {
@@ -272,6 +289,23 @@ public final class DateTimeUtils {
     }
 
     return true;
+
+  }
+
+  private List<LocalDate> getAllMonthDays(YearMonth yearMonth) {
+    AssertUtils.notNull(yearMonth, "yearMonth");
+
+    LocalDate date = LocalDate.of(yearMonth.getYear(), yearMonth.getMonth(), 1);
+    final LocalDate end = date.plusMonths(1);
+
+    List<LocalDate> dates = new ArrayList<>();
+
+    while (date.isBefore(end)) {
+      dates.add(date);
+      date = date.plusDays(1);
+    }
+
+    return dates;
 
   }
 
