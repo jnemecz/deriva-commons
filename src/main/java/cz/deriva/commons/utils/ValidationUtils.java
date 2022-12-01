@@ -12,6 +12,28 @@ public final class ValidationUtils {
   private ValidationUtils() {
   }
 
+  public static boolean isGtZero(final String value, final Class clazz) {
+    AssertUtils.notNull(clazz, "clazz");
+
+    if (StringUtils.isBlank(value)) {
+      return false;
+    }
+
+    if (clazz == Long.class) {
+      return ValidationUtils.isGtZero(ObjectUtils.safeLong(value, 0L));
+
+    } else if (clazz == Double.class) {
+      return ValidationUtils.isGtZero(ObjectUtils.safeDouble(value, 0d));
+
+    } else if (clazz == Integer.class) {
+      return ValidationUtils.isGtZero(ObjectUtils.safeInteger(value, 0));
+
+    } else {
+      throw new IllegalArgumentException(String.format("Unsupported Type: %s", clazz));
+    }
+
+  }
+
   public static boolean isGtZero(final Double value) {
     if (value == null) {
       return false;
@@ -25,6 +47,7 @@ public final class ValidationUtils {
    * @param list1 prvni kontrolovany seznam
    * @param list2 druhy kontrolovany seznam
    * @param <T>   typ hodnot v seznamu
+   *
    * @return {@code true} pokud jsou shodne, jinak {@code false}
    */
   public static <T> boolean listEqualsIgnoreOrder(final List<T> list1, final List<T> list2) {
@@ -76,6 +99,13 @@ public final class ValidationUtils {
     return value >= 0L;
   }
 
+  public static boolean isGtZero(final Integer value) {
+    if (value == null) {
+      return false;
+    }
+    return value > 0;
+  }
+
   public static boolean isGtZero(final Long value) {
     if (value == null) {
       return false;
@@ -87,6 +117,7 @@ public final class ValidationUtils {
    * @param value         konrolovana hodnota
    * @param fromInclusive hodnota zacatku intervalu (vcetne)
    * @param toInclusive   hodnota konce intervalu (vcetne)
+   *
    * @return true pokud je hodnota v danem rozmezi, jinak false
    */
   public static boolean between(final BigDecimal value, final BigDecimal fromInclusive, final BigDecimal toInclusive) {
@@ -182,7 +213,9 @@ public final class ValidationUtils {
    * bezpecne heslo.</p>
    *
    * @param passwordValue kontrolovane heslo
+   *
    * @return true pokud je heslo bezpecne, jinak false
+   *
    * @see <a href="https://support.apple.com/en-us/HT201303">Security and your Apple ID</a>
    */
   public static boolean isValidPassword(final CharSequence passwordValue) {

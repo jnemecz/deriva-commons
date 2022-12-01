@@ -127,14 +127,14 @@ public final class DateTimeUtils {
    *
    * @return Pokud je parsovana hodnota null nebo dojde k chybe, vraci null.
    */
-  public static LocalDateTime safeLocalDateTime(String value) {
+  public static LocalDateTime safeLocalDateTimeUtc(String value) {
 
     if (StringUtils.isBlank(value)) {
       return null;
     }
 
     try {
-      return LocalDateTime.parse(value, DateTimeFormatter.ISO_INSTANT);
+      return LocalDateTime.ofInstant(Instant.from(DateTimeFormatter.ISO_INSTANT.parse(value)), ZoneOffset.UTC);
     } catch (Exception e) {
       return null;
     }

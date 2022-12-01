@@ -19,6 +19,24 @@ public class ObjectUtils {
     return bigDecimal;
   }
 
+  public static Double safeDouble(final String value) {
+    return ObjectUtils.safeDouble(value, null);
+  }
+
+  public static Double safeDouble(final String value, final Double fallBackValue) {
+
+    if (StringUtils.isBlank(value)) {
+      return fallBackValue;
+    } else {
+      try {
+        return Double.valueOf(value);
+      } catch (Exception e) {
+        return fallBackValue;
+      }
+    }
+
+  }
+
   public static BigDecimal safeBigDecimal(final BigDecimal value, final BigDecimal fallBackValue) {
 
     if (value != null) {
@@ -61,6 +79,10 @@ public class ObjectUtils {
     }
   }
 
+  public static Long safeLongZero(final String value) {
+    return ObjectUtils.safeLong(value, 0L);
+  }
+
   public static Long safeLong(final String value) {
     return ObjectUtils.safeLong(value, null);
   }
@@ -82,6 +104,13 @@ public class ObjectUtils {
 
   public static Integer safeInteger(final String value) {
     return ObjectUtils.safeInteger(value, null);
+  }
+
+  public static String safeToString(Object object) {
+    if (object == null) {
+      return null;
+    }
+    return object.toString();
   }
 
 }
