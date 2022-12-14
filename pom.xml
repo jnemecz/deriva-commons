@@ -6,7 +6,7 @@
 
     <groupId>cz.deriva.commons</groupId>
     <artifactId>deriva-commons</artifactId>
-    <version>1.58</version>
+    <version>1.59</version>
 
     <description>A library of helper functions for easier Java development</description>
 
@@ -29,8 +29,8 @@
         <repository-name>deriva-commons</repository-name>
         <branch-name>master</branch-name>
         <github.global.server>github</github.global.server>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
     <build>
