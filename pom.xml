@@ -6,7 +6,10 @@
 
     <groupId>cz.deriva.commons</groupId>
     <artifactId>deriva-commons</artifactId>
-    <version>1.54</version>
+    <version>1.57</version>
+
+    <description>A library of helper functions for easier Java development</description>
+    <url>https://deriva.cz</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,6 +22,45 @@
         <junit.platform.version>1.2.0</junit.platform.version>
         <spring.boot.version>2.2.4.RELEASE</spring.boot.version>
     </properties>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <repositories>
+        <repository>
+            <id>lucyhr-api</id>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <url>https://api.bitbucket.org/1.0/repositories/dwuysan/lucyhr-api/raw/releases</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>synergian-repo</id>
+            <url>https://raw.github.com/synergian/wagon-git/releases</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <scm>
+        <connection>scm:git:git://bitbucket.org/derivacz/deriva-commons.git</connection>
+        <developerConnection>scm:git:ssh://bitbucket.org:derivacz/deriva-commons.git</developerConnection>
+        <url>https://bitbucket.org/derivacz/deriva-commons.git/src</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>Jiri Nemec</name>
+            <email>jiri.nemec@deriva.cz</email>
+            <organization>DERIVA Solutions</organization>
+            <organizationUrl>https://deriva.cz/</organizationUrl>
+        </developer>
+    </developers>
 
     <dependencies>
 
