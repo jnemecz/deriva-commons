@@ -20,11 +20,7 @@
         <junit.jupiter.version>5.2.0</junit.jupiter.version>
         <junit.platform.version>1.2.0</junit.platform.version>
         <spring.boot.version>2.2.4.RELEASE</spring.boot.version>
-
         <github.global.server>github</github.global.server>
-
-
-        <!--Put your own properties -->
         <repository-owner>jnemecz</repository-owner>
         <repository-name>deriva-commons</repository-name>
         <branch-name>master</branch-name>
