@@ -6,16 +6,17 @@
 
     <groupId>cz.deriva.commons</groupId>
     <artifactId>deriva-commons</artifactId>
-    <version>1.61</version>
+    <version>1.62</version>
 
     <description>A library of helper functions for easier Java development</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
+<java.version>1.8</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.target>1.8</maven.compiler.target>            
+             
         <maven-compiler.version>3.7.0</maven-compiler.version>
         <junit.jupiter.version>5.2.0</junit.jupiter.version>
         <junit.platform.version>1.2.0</junit.platform.version>
@@ -25,8 +26,6 @@
         <repository-name>deriva-commons</repository-name>
         <branch-name>master</branch-name>
         <github.global.server>github</github.global.server>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
     <build>
